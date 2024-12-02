@@ -3,7 +3,7 @@ import ply.yacc as yacc
 from morse_code_logic import MORSE_CODE_DICT
 
 # Define Lexer Tokens
-tokens = ('DOT', 'DASH', 'SLASH')  # No SPACE token needed
+tokens = ('DOT', 'DASH', 'SLASH') 
 
 # Token Definitions
 t_DOT = r'\.'
