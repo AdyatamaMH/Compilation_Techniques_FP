@@ -10,7 +10,7 @@ t_DOT = r'\.'
 t_DASH = r'-'
 t_SLASH = r'/' 
 
-# Ignore spaces entirely (this will make spaces match an empty string)
+# Ignore spaces entirely
 t_ignore = ' \t\n'
 
 def t_error(t):
