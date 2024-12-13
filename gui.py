@@ -1,10 +1,15 @@
 import tkinter as tk
 from tkinter import messagebox
 from lexer_parser import parse_morse_code
-from morse_code_logic import text_to_morse, morse_to_text
+from morse_code_logic import text_to_morse, morse_to_text, play_morse_sound
 
 # Mode Selection
 current_mode = "Morse to Text"
+
+# Global widget references
+mode_label = None
+input_text = None
+output_text = None
 
 def interpret_text():
     """Callback to interpret based on the selected mode."""
@@ -15,10 +20,13 @@ def interpret_text():
     try:
         if current_mode == "Morse to Text":
             result = parse_morse_code(input_value)  # Using parser for Morse-to-Text
+            play_morse_sound(input_value)  # Play sound for the Morse code input
         elif current_mode == "Text to Morse":
             result = text_to_morse(input_value)  # Using utility for Text-to-Morse
+            play_morse_sound(result)  # Play sound for the generated Morse code
         else:
             result = "Invalid Mode"
+        
         output_text.delete("1.0", tk.END)
         output_text.insert(tk.END, result)
     except Exception as e:
@@ -37,41 +45,41 @@ def clear_fields():
     input_text.delete("1.0", tk.END)
     output_text.delete("1.0", tk.END)
 
-# Create the main GUI window
-root = tk.Tk()
-root.title("Morse Code Interpreter")
-root.geometry("500x400")
-
-# Mode Label
-mode_label = tk.Label(root, text=f"Mode: {current_mode}", font=("Arial", 14))
-mode_label.pack(pady=10)
-
-# Mode Buttons
-button_frame = tk.Frame(root)
-tk.Button(button_frame, text="Morse to Text", command=lambda: set_mode("Morse to Text"), width=15).pack(side=tk.LEFT, padx=5)
-tk.Button(button_frame, text="Text to Morse", command=lambda: set_mode("Text to Morse"), width=15).pack(side=tk.LEFT, padx=5)
-button_frame.pack(pady=10)
-
-# Input Text Area
-tk.Label(root, text="Enter Input:", font=("Arial", 12)).pack(pady=5)
-input_text = tk.Text(root, height=5, width=50, wrap=tk.WORD, font=("Arial", 10))
-input_text.pack(pady=5)
-
-# Interpret Button
-tk.Button(root, text="Interpret", command=interpret_text, width=20, bg="blue", fg="white").pack(pady=10)
-
-# Output Text Area
-tk.Label(root, text="Output:", font=("Arial", 12)).pack(pady=5)
-output_text = tk.Text(root, height=5, width=50, wrap=tk.WORD, font=("Arial", 10))
-output_text.pack(pady=5)
-
-# Clear Button
-tk.Button(root, text="Clear", command=clear_fields, width=10, bg="red", fg="white").pack(pady=10)
-
 def start_gui():
-    """Start the GUI event loop."""
+    """Function to start the GUI."""
+    global mode_label, input_text, output_text
+    
+    # Create the main GUI window
+    root = tk.Tk()
+    root.title("Morse Code Interpreter")
+    root.geometry("500x400")
+
+    # Mode Label
+    mode_label = tk.Label(root, text=f"Mode: {current_mode}", font=("Arial", 14))
+    mode_label.pack(pady=10)
+
+    # Input Textbox
+    input_text = tk.Text(root, height=5, width=50)
+    input_text.pack(pady=10)
+
+    # Output Textbox
+    output_text = tk.Text(root, height=5, width=50)
+    output_text.pack(pady=10)
+
+    # Buttons
+    btn_interpret = tk.Button(root, text="Interpret", command=interpret_text, font=("Arial", 12))
+    btn_interpret.pack(pady=5)
+
+    btn_clear = tk.Button(root, text="Clear", command=clear_fields, font=("Arial", 12))
+    btn_clear.pack(pady=5)
+
+    btn_morse_to_text = tk.Button(root, text="Morse to Text", command=lambda: set_mode("Morse to Text"), font=("Arial", 12))
+    btn_morse_to_text.pack(pady=5)
+
+    btn_text_to_morse = tk.Button(root, text="Text to Morse", command=lambda: set_mode("Text to Morse"), font=("Arial", 12))
+    btn_text_to_morse.pack(pady=5)
+
     root.mainloop()
 
-# Run the GUI
 if __name__ == "__main__":
     start_gui()

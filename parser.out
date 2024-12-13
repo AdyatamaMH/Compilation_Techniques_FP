@@ -1,0 +1,165 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> message
+Rule 1     message -> words
+Rule 2     words -> words word
+Rule 3     words -> word
+Rule 4     word -> morse SLASH
+Rule 5     word -> morse
+Rule 6     morse -> morse DOT
+Rule 7     morse -> morse DASH
+Rule 8     morse -> DOT
+Rule 9     morse -> DASH
+
+Terminals, with rules where they appear
+
+DASH                 : 7 9
+DOT                  : 6 8
+SLASH                : 4
+error                : 
+
+Nonterminals, with rules where they appear
+
+message              : 0
+morse                : 4 5 6 7
+word                 : 2 3
+words                : 1 2
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . message
+    (1) message -> . words
+    (2) words -> . words word
+    (3) words -> . word
+    (4) word -> . morse SLASH
+    (5) word -> . morse
+    (6) morse -> . morse DOT
+    (7) morse -> . morse DASH
+    (8) morse -> . DOT
+    (9) morse -> . DASH
+
+    DOT             shift and go to state 5
+    DASH            shift and go to state 6
+
+    message                        shift and go to state 1
+    words                          shift and go to state 2
+    word                           shift and go to state 3
+    morse                          shift and go to state 4
+
+state 1
+
+    (0) S' -> message .
+
+
+
+state 2
+
+    (1) message -> words .
+    (2) words -> words . word
+    (4) word -> . morse SLASH
+    (5) word -> . morse
+    (6) morse -> . morse DOT
+    (7) morse -> . morse DASH
+    (8) morse -> . DOT
+    (9) morse -> . DASH
+
+    $end            reduce using rule 1 (message -> words .)
+    DOT             shift and go to state 5
+    DASH            shift and go to state 6
+
+    word                           shift and go to state 7
+    morse                          shift and go to state 4
+
+state 3
+
+    (3) words -> word .
+
+    DOT             reduce using rule 3 (words -> word .)
+    DASH            reduce using rule 3 (words -> word .)
+    $end            reduce using rule 3 (words -> word .)
+
+
+state 4
+
+    (4) word -> morse . SLASH
+    (5) word -> morse .
+    (6) morse -> morse . DOT
+    (7) morse -> morse . DASH
+
+  ! shift/reduce conflict for DOT resolved as shift
+  ! shift/reduce conflict for DASH resolved as shift
+    SLASH           shift and go to state 8
+    $end            reduce using rule 5 (word -> morse .)
+    DOT             shift and go to state 9
+    DASH            shift and go to state 10
+
+  ! DOT             [ reduce using rule 5 (word -> morse .) ]
+  ! DASH            [ reduce using rule 5 (word -> morse .) ]
+
+
+state 5
+
+    (8) morse -> DOT .
+
+    SLASH           reduce using rule 8 (morse -> DOT .)
+    DOT             reduce using rule 8 (morse -> DOT .)
+    DASH            reduce using rule 8 (morse -> DOT .)
+    $end            reduce using rule 8 (morse -> DOT .)
+
+
+state 6
+
+    (9) morse -> DASH .
+
+    SLASH           reduce using rule 9 (morse -> DASH .)
+    DOT             reduce using rule 9 (morse -> DASH .)
+    DASH            reduce using rule 9 (morse -> DASH .)
+    $end            reduce using rule 9 (morse -> DASH .)
+
+
+state 7
+
+    (2) words -> words word .
+
+    DOT             reduce using rule 2 (words -> words word .)
+    DASH            reduce using rule 2 (words -> words word .)
+    $end            reduce using rule 2 (words -> words word .)
+
+
+state 8
+
+    (4) word -> morse SLASH .
+
+    DOT             reduce using rule 4 (word -> morse SLASH .)
+    DASH            reduce using rule 4 (word -> morse SLASH .)
+    $end            reduce using rule 4 (word -> morse SLASH .)
+
+
+state 9
+
+    (6) morse -> morse DOT .
+
+    SLASH           reduce using rule 6 (morse -> morse DOT .)
+    DOT             reduce using rule 6 (morse -> morse DOT .)
+    DASH            reduce using rule 6 (morse -> morse DOT .)
+    $end            reduce using rule 6 (morse -> morse DOT .)
+
+
+state 10
+
+    (7) morse -> morse DASH .
+
+    SLASH           reduce using rule 7 (morse -> morse DASH .)
+    DOT             reduce using rule 7 (morse -> morse DASH .)
+    DASH            reduce using rule 7 (morse -> morse DASH .)
+    $end            reduce using rule 7 (morse -> morse DASH .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for DOT in state 4 resolved as shift
+WARNING: shift/reduce conflict for DASH in state 4 resolved as shift
