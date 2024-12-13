@@ -6,9 +6,9 @@ from morse_code_logic import MORSE_CODE_DICT
 tokens = ('DOT', 'DASH', 'SLASH') 
 
 # Token Definitions
-t_DOT = r'\.'   # DOT represents a '.'
-t_DASH = r'-'   # DASH represents a '-'
-t_SLASH = r'/'  # SLASH represents a '/'
+t_DOT = r'\.'
+t_DASH = r'-'
+t_SLASH = r'/' 
 
 # Ignore spaces entirely
 t_ignore = ' \t\n'
@@ -26,16 +26,15 @@ def build_lexer():
 # Define Parser Grammar
 def p_message(p):
     '''message : words'''
-    p[0] = ''.join(p[1])  # Convert the list of words to a string
+    p[0] = ''.join(p[1])  
 
 def p_words(p):
     '''words : words word
              | word'''
     if len(p) == 3:
-        p[0] = p[1] + [p[2]]  # Add the word to the existing list
+        p[0] = p[1] + [p[2]]  
     else:
-        p[0] = [p[1]]  # Create a new list with the first word
-
+        p[0] = [p[1]] 
 def p_word(p):
     '''word : morse SLASH
             | morse'''
@@ -66,4 +65,3 @@ def parse_morse_code(code):
     lexer = build_lexer()  # Build lexer
     parser = build_parser()  # Build parser
     return parser.parse(code, lexer=lexer)  # Parse input using custom lexer
-
