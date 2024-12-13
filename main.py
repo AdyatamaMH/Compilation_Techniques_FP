@@ -1,4 +1,5 @@
-import gui
+from gui import start_gui
 
 if __name__ == "__main__":
-    gui.start_gui()
+    print("Starting Morse Code Interpreter...")
+    start_gui()
