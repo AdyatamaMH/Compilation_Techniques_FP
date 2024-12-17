@@ -38,7 +38,7 @@ def p_words(p):
 def p_word(p):
     '''word : morse SLASH
             | morse'''
-    p[0] = MORSE_CODE_DICT.get(p[1], '?')  # Decode Morse word or '?' for invalid
+    p[0] = MORSE_CODE_DICT.get(p[1], '?')
 
 def p_morse(p):
     '''morse : morse DOT
@@ -46,9 +46,9 @@ def p_morse(p):
              | DOT
              | DASH'''
     if len(p) == 3:
-        p[0] = p[1] + p[2]  # Append DOT or DASH to the sequence
+        p[0] = p[1] + p[2]
     else:
-        p[0] = p[1]  # Single DOT or DASH
+        p[0] = p[1]
 
 def p_error(p):
     """Handle syntax errors in the input."""
@@ -62,6 +62,6 @@ def build_parser():
 # Parse Function
 def parse_morse_code(code):
     """Parse Morse code input and return the interpreted text."""
-    lexer = build_lexer()  # Build lexer
-    parser = build_parser()  # Build parser
-    return parser.parse(code, lexer=lexer)  # Parse input using custom lexer
+    lexer = build_lexer() 
+    parser = build_parser()  
+    return parser.parse(code, lexer=lexer) 
